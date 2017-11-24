@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simplechat.client.controllers.ChatScreenController">
+   <children>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="600.0" prefWidth="260.0" style="-fx-background-color: #00586D;" HBox.hgrow="NEVER">
+               <children>
+                  <Label style="-fx-background-color: transparent;" text="Messages" textFill="#bcb8b8">
+                     <font>
+                        <Font name="Calibri Bold" size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ListView id="#list-view" fx:id="listUsers" onMouseReleased="#listViewReleased" prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #00586D;" stylesheets="@../styles/listStyles.css" />
+               </children>
+            </VBox>
+            <VBox style="-fx-background-color: #ffffff;" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TextArea fx:id="showMessage" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="740.0" scaleShape="false" style="-fx-background-color: #ffffff;" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="15.0" left="20.0" right="15.0" top="15.0" />
+                           </padding>
+                        </TextArea>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="70.0" style="-fx-background-color: #ffffff;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="130.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <TextArea fx:id="inputMessage" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="50.0" maxWidth="1.7976931348623157E308" onKeyReleased="#keyReleasedPropertyChat" pickOnBounds="false" prefHeight="50.0" promptText="Type a message" scaleShape="false" style="-fx-border-width: 0; -fx-border-color: #ffffff; -fx-shape: none;" VBox.vgrow="ALWAYS">
+                                 <opaqueInsets>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </opaqueInsets>
+                                 <rotationAxis>
+                                    <Point3D />
+                                 </rotationAxis>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Calibri" size="19.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="enterBtn" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" style="-fx-background-color: #0087A7; -fx-cursor: hand;" text="Send" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets top="10.0" />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
