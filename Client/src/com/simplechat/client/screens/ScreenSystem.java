@@ -15,14 +15,20 @@ public class ScreenSystem {
     public static String APP_TITLE = "SimpleChat";
 
 
-    private Stage window;  //The JavaFX Stage class is the top level JavaFX container. The primary Stage is constructed by the platform. Additional Stage objects may be constructed by the application. Stage objects must be constructed and modified on the JavaFX Application Thread.
-    private Map<ScreenTypes, Scene> screens; //создание переменной типа Map <тип ключа ScreenTypes, тип значения Scene>
+    /*NOTE:The JavaFX Stage class is the top level JavaFX container. The primary Stage is
+    constructed by the platform. Additional Stage objects may be constructed by the application.
+    Stage objects must be constructed and modified on the JavaFX Application Thread.*/
+    private Stage window;
+
+    //NOTE:Creating variable with type Map <key type ScreenTypes, value type Scene>
+    private Map<ScreenTypes, Scene> screens;
 
     private static volatile ScreenSystem instance = null;
 
+    //NOTE:Creating HashMap - unsorted set
     private ScreenSystem() {
         screens = new HashMap<>();
-    } //создание  мапы HashMap - несортированный набор
+    }
 
     public Stage getWindow() {
         return window;
@@ -44,16 +50,25 @@ public class ScreenSystem {
         return instance;
     }
 
-    public void switchScreen(ScreenTypes screen) throws IOException { // на вход метода приходит параметр LOGIN_SCREEN
+    //NOTE: at first screen = LOGIN_SCREEN, then screen = CHAT_SCREEN
+    public void switchScreen(ScreenTypes screen) throws IOException {
         if (screen == ScreenTypes.LOGIN_SCREEN) {
             window.setResizable(false);
         }
         if (screen == ScreenTypes.CHAT_SCREEN) {
             window.setResizable(true);
         }
-        Scene scene  = screens.get(screen) != null   //screens это HashMap. Проверка: есть ли в HashMap ключ LOGIN_SCREEN (и присваеваем его в переменную scene типа Scene)
-                ? screens.get(screen) //если первое выражение верно то выполняется это действие: у screens (это HashMap) вызывается метод get c параметром screen (это LOGIN_SCREEN), который возвращает значение по заданному ключу, либо null, если значения такого значения нет
-                : cacheScene(createScreen(screen), screen); // если же первое выражение false (у HashMap нет ключа LOGIN_SCREEN) то вызывается метод cacheScene с параметрами (createScreen(LOGIN_SCREEN), LOGIN_SCREEN), получается что вначале вызовется еще метод createScreen(LOGIN_SCREEN).
+        /*NOTE: screens is HashMap. If HashMap contains LOGIN_SCREEN (CHAT_SCREEN) key
+        (assign scene with access method of screens)*/
+        Scene scene  = screens.get(screen) != null
+
+                /*NOTE: if the first statement is true then this action returns value
+                by key = LOGIN_SCREEN (CHAT_SCREEN)*/
+                ? screens.get(screen)
+
+                /*NOTE: if false then method cacheScene calls with arguments (createScreen(LOGIN_SCREEN), LOGIN_SCREEN)),
+                or (createScreen(CHAT_SCREEN), CHAT_SCREEN))*/
+                : cacheScene(createScreen(screen), screen);
         window.setScene(scene);
         if (screens.size() == 1) {
             window.show();
@@ -61,16 +76,23 @@ public class ScreenSystem {
         }
     }
 
-    private Scene createScreen(ScreenTypes screen) throws IOException { // создание сцены. на вход метода приходит параметр LOGIN_SCREEN
+    //NOTE: creation of scene. At first screen = LOGIN_SCREEN, then screen = CHAT_SCREEN
+    private Scene createScreen(ScreenTypes screen) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(
                 String.format("/views/%sView.fxml", screen.getName())
         ));
-        return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT); //создание объекта перегруженным конструктором Scene
+
+        //NOTE: creation of Scene object with overloaded constructor of Scene
+        return new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
-    private Scene cacheScene(Scene scene, ScreenTypes screen) {  //scene это созданный объект перегруженным конструктором Scene, screen это ключ LOGIN_SCREEN
-        if (screens.get(screen) == null) { //если ключ LOGIN_SCREEN отстутствует в HashMap, то
-            screens.put(screen, scene);  //кладем туда ключ LOGIN_SCREEN и значение = созданный объект сцену
+    //NOTE: scene = object Scene that is created with overloaded constructor, screen = LOGIN_SCREEN (then CHAT_SCREEN)
+    private Scene cacheScene(Scene scene, ScreenTypes screen) {
+
+        //NOTE: if HashMap doesn't contain key (LOGIN_SCREEN | CHAT_SCREEN)
+        if (screens.get(screen) == null) {
+            //then put this key and scene
+            screens.put(screen, scene);
         }
         return scene;
     }

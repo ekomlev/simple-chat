@@ -1,4 +1,7 @@
-package com.simplechat.commons.messaging;
+package com.simplechat.commons.interfaces;
+
+import com.simplechat.commons.interfaces.IMessageSender;
+import com.simplechat.commons.messaging.BaseMessage;
 
 import java.io.IOException;
 

@@ -1,30 +1,29 @@
 package com.simplechat.commons.messaging;
 
+import com.simplechat.commons.interfaces.IMessageSender;
+import com.simplechat.commons.interfaces.MessageDispatcher;
 import com.simplechat.commons.utils.OnlineUser;
-import com.sun.media.jfxmedia.events.NewFrameEvent;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.org.apache.xerces.internal.util.EntityResolverWrapper;
 
 import java.io.IOException;
-import java.time.chrono.IsoChronology;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * позволяет работать только с теми типами,
- * которые наследуют класс Thread  и в то же время реализуют интерфейс IMessageSender.
- * В свою очередь данный класс реализует интерфейс MessageDispatcher
- * @param <T> Универсальный параметр вместо которого будут подставляться необходимые типы во время выполнения
+ * NOTE:
+ * allows to work only with those types,
+ * that extend Thread class and at the same moment implements IMessageSender interface.
+ * This class implements MessageDispatcher interface.
+ * @param <T> universal parameter instead of which should input required types that are need during executing
  */
-public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements MessageDispatcher <T> { //
-    /*private List<T> clients;*/
+public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements MessageDispatcher<T> { //
     private Map<String, T> clientsMap;
 
     public MessageDispatcherImpl() {
-        //clients = new LinkedList<>();
-        clientsMap = new ConcurrentHashMap<>(); //ConcurrentHashMap умеет работать с потоками
+
+        //NOTE: ConcurrentHashMap can work with threads
+        clientsMap = new ConcurrentHashMap<>();
     }
 
 
@@ -57,17 +56,22 @@ public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements
 
     @Override
     public void killMessageSender(T messageSender) {
-        clientsMap.remove(messageSender.getClientId()); //убрали из мапы
+
+        //NOTE: remove from map
+        clientsMap.remove(messageSender.getClientId());
 
         new Thread(() -> {
             try {
-                introduceClient(messageSender);  //разослали новый вариант мапы оставшимся
+
+                //NOTE: sent new map to remaining users
+                introduceClient(messageSender);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
 
-        messageSender.finish(); // там isRunning = false - это clientThread на сервере
+        //NOTE: isRunning = false - this is clientThread on server
+        messageSender.finish();
     }
 
     @Override
@@ -90,16 +94,29 @@ public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements
     private void introduceClient(T client)  throws IOException{
         List<OnlineUser> users = new LinkedList<>();
         OnlineUsersMessage msg = new OnlineUsersMessage();
-        for (String s : clientsMap.keySet()) { //проходим по ключам clientsMap
+
+        //NOTE: going through clientsMap keys
+        for (String s : clientsMap.keySet()) {
                 OnlineUser usr = new OnlineUser();
-                usr.userId = clientsMap.get(s).getClientId(); //методы getClientId() и getClientName() переопределены в server/ClientThread который наследует интерфейс ImessageSender (в нем то и описаны эти два метода по дефолту). Входным параметром метода introduceClient служит client - тип этой ссылки ClientThread, именно поэтому вызываются переопределенные методы getClientId() и getClientName() в clientThread.
+
+                /*NOTE: methods getClientId() & getClientName() are overrode in server/ClientThread class. This class
+                implements ImessageSender interface. ImessageSender contains this 2 methods by default.
+                Input argument of introduceClient() method is client of ClientThread type, so this two overrode methods
+                are called in clientThread*/
+                usr.userId = clientsMap.get(s).getClientId();
                 usr.userName = clientsMap.get(s).getClientName();
-                users.add(usr); //складываем в List usr с полями userId и userName
+
+                //NOTE: putting in List usr with userId and userName fields
+                users.add(usr);
         }
-        msg.setUsers(users); //рассылаем список пользователей всем пользователям
+
+        //NOTE: sending list of users to all users
+        msg.setUsers(users);
         msg.setUserName(client.getClientName());
         for (T t : clientsMap.values()) {
-                t.sendMessage(msg);  //метод sendMessage переопределен server/ClientThread, который наследует интерфейс ImessageSender (в нем то и описан этот метод по дефолту)
+
+                //NOTE: this method is overrode in server/ClientThread class
+                t.sendMessage(msg);
         }
     }
 }

@@ -35,7 +35,7 @@ public class LoginScreenController extends BaseScreenController {
     @FXML
     private Label errorField;
 
-    //Validation of 2 filled in fields
+    //NOTE:Validation of 2 filled in fields
     public void keyReleasedPropertyLogin() {
         String loginFieldText = loginField.getText();
         String hostFieldText = hostField.getText();
@@ -44,14 +44,16 @@ public class LoginScreenController extends BaseScreenController {
         connectButton.setDisable(false);
     }
 
-    //Connecting to the chart + IP validation
+    //NOTE:Connecting to the chart + IP validation
     public void onClick(MouseEvent event) {
         String loginFieldText = loginField.getText();
         String hostFieldText = hostField.getText();
         int portFieldNumber = Integer.parseInt(portField.getText());
         try {
-            Options.getInstance().setUser(new User(loginFieldText, hostFieldText, portFieldNumber));  // Создаем юзера класса User с тремя полями (userName, hostIp, port) через Options класс который реализует шаблон singleton
-            //Options.getInstance().getUser();
+
+            /*NOTE:Creates user of User class with 3 fields (userName, hostIp, port) via Options class that
+            implements Singleton pattern*/
+            Options.getInstance().setUser(new User(loginFieldText, hostFieldText, portFieldNumber));
             Options.getInstance().setClientThread(new ClientThread(Options.getInstance().getUser()));
             navigate(ScreenTypes.CHAT_SCREEN);
         } catch (IOException | NumberFormatException e) {

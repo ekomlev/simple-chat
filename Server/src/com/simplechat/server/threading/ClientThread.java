@@ -1,9 +1,8 @@
 package com.simplechat.server.threading;
 
 import com.simplechat.commons.messaging.BaseMessage;
-import com.simplechat.commons.messaging.IMessageSender;
-import com.simplechat.commons.messaging.IntroduceMessage;
-import com.simplechat.commons.messaging.MessageDispatcher;
+import com.simplechat.commons.interfaces.IMessageSender;
+import com.simplechat.commons.interfaces.MessageDispatcher;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -82,7 +81,9 @@ public class ClientThread extends Thread implements IMessageSender {
         isRunning = true;
         while (isRunning){
             try {
-                BaseMessage message = (BaseMessage) is.readObject(); //десериализация входящего сообщения от соответсвующего потока клиента ClientThread
+
+                //NOTE: deserialization of input message from appropriate client thread of ClientThread class
+                BaseMessage message = (BaseMessage) is.readObject();
                 if (listener != null){
                     listener.onMessageReceived(message, this);
                 }

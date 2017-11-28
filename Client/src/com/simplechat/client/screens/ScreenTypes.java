@@ -1,7 +1,14 @@
 package com.simplechat.client.screens;
 
 public enum ScreenTypes {
-    LOGIN_SCREEN {  // enum Типа ScreenTypes. Обращение ScreenTypes.LOGIN_SCREEN  ... пример: enum Season { WINTER, SPRING, SUMMER, AUTUMN }. Пример обращения: Season season = Season.SPRING; System.out.println(season);
+
+    /*NOTE: Java enum type is a special kind of Java class. An enum can contain constants, methods etc.
+    ScreenTypes is a class of enum type from java.lang.Enum
+    LOGIN_SCREEN и CHAT_SCREEN - 2 constants of ScreenType so they override getName() method. Objects this of constants
+    are in the single instance and available statically: ScreenTypes screen = ScreenTypes.LOGIN_SCREEN
+    Generics in enum is disabled. So the following example won't compiler: enum Type<T> {}
+    */
+    LOGIN_SCREEN {
         @Override
         public String getName() {
             return "LoginScreen";
@@ -13,11 +20,6 @@ public enum ScreenTypes {
             return "ChatScreen";
         }
     };
- /*2 производных класса LOGIN_SCREEN и CHAT_SCREEN с полиморфным методом getName().
- ScreenTypes - класс производный от java.lang.Enum
- LOGIN_SCREEN и CHAT_SCREEN - 2 производных класса от ScreenTypes, поэтому у себя они переопределяют метод getName()
- При этом объекты классов LOGIN_SCREEN и CHAT_SCREEN существуют в единственном экземпляре и доступны статически
- В Java использование генериков в enum запрещено. Так следующий пример не скомпилируется: enum Type<T> {}
- */
+
     public abstract String getName();
 }

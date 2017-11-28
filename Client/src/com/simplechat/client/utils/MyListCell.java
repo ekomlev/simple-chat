@@ -13,63 +13,40 @@ import java.io.IOException;
 
 
 public class MyListCell extends ListCell<OnlineUser> {
-    // все элементы моего fxml
     private HBox hBox;
     private VBox vBox;
     private Label userName;
-/*    private ImageView imgOnline;
-    private Label textAnimal;*/
-    /**/
+
 
     public MyListCell() {
         try {
-            // нужно их найти!
-            // hbox - это самый главный элемент моего fxml, все остальные элементы внутри его, его я и подгружу
-            // через FXMLLoader
+
+            //NOTE: loads ListCell.fxml and assign to hBox
             hBox = FXMLLoader.load(getClass().getResource("/views/ListCell.fxml"));
-            // остальные просто найду внутри
+
+            //NOTE: assign to vBox and userName variable corresponding values via get(level of child) method
             vBox = (VBox) hBox.getChildren().get(1);
             userName = (Label) vBox.getChildren().get(0);
-           /* vBox = (VBox) hBox.getChildren().get(1);
-            imgOnline = (ImageView) hBox.getChildren().get(1);
-            textAnimal = (Label) vBox.getChildren().get(1);
-            imgAnimal = (ImageView) hBox.getChildren().get(1);*/
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // это наш ключевой метод, именно он на входе будет принимать нашего юзера
-    // и тут мы будем заполнять поля fxml
+    //NOTE: takes user
     @Override
     public void updateItem(OnlineUser user, boolean empty) {
         super.updateItem(user, empty);
 
-        // этот блок if-else важен, если юзер удалён, при апдейте вернём пустую ячейку
+        //NOTE:  if user exists then
         if (user != null && !empty) {
-            // рисуем в ячейке наш myListCell, уже говорил что hbox содержит в себе все остальные компоненты
+
+            //NOTE: then create in cell myListCell (hBox contains all components of ListCell.fxml)
             setGraphic(hBox);
             userName.setText(user.toString());
-            /*// всё остальное моя песня
-            userName.setText(user.toString());
-            textAnimal.setText("anonymous " + user.getTotem().toString());
-            try {
-                imgAnimal.setImage(getAnimalImage(user.getTotem().toString()));
-            } catch (IOException e) {
-                System.out.println("Can not find a picture!");
-                e.printStackTrace();
-            }*/
         } else {
             setGraphic(null);
             return;
         }
     }
-
-/*
-    // это тоже чисто мой метод
-    private Image getAnimalImage(String animal) throws IOException {
-        return new Image(String.format("/img/animals/%s.png", animal));
-    }
-*/
 
 }

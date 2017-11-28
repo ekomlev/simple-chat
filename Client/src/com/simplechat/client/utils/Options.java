@@ -5,7 +5,9 @@ import com.simplechat.client.threading.ClientThread;
 public class Options {
     private User user = null;
     private ClientThread clientThread;
-    private static volatile Options instance = null; //volatile keyword is used to mark a Java variable as "being stored in main memory".
+
+    //NOTE: volatile keyword is used to mark a Java variable as "being stored in main memory"
+    private static volatile Options instance = null;
 
     public Options() {
 
@@ -27,9 +29,17 @@ public class Options {
         this.clientThread = clientThread;
     }
 
-    public static Options getInstance() { //Double-Checked Locking. При первом обращении к методу несколько потоков могут пройти первую проверку на null, но во второй блок зайдет и инициализирует объект только один единственный поток! И синхронизация здесь может понадобиться лишь при первом обращении к методу.
+
+    public static Options getInstance() {
+
+        //NOTE: Double-Checked Locking. At first calling method a few threads can pass the first condition (is null)
         if (instance == null) {
-            synchronized (Options.class) {// not null object of type Class<Options> clazz
+
+            //NOTE: not null object of type Class<Options> clazz
+            synchronized (Options.class) {
+
+                /*NOTE: At second time only one single thread come in block {} and initialize object Options
+                 Synchronization may be needed  only at first calling the method*/
                 if (instance == null) {
                     instance = new Options();
                 }

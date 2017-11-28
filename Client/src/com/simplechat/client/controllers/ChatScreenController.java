@@ -1,16 +1,14 @@
 package com.simplechat.client.controllers;
 
-import com.simplechat.client.screens.ScreenTypes;
-import com.simplechat.client.threading.ClientThread;
 import com.simplechat.client.utils.MyListCell;
 import com.simplechat.client.utils.Options;
-import com.simplechat.client.utils.User;
+import com.simplechat.commons.interfaces.IMessageSender;
+import com.simplechat.commons.interfaces.MessageDispatcher;
 import com.simplechat.commons.messaging.*;
 import com.simplechat.commons.utils.OnlineUser;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -22,8 +20,6 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.Key;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ChatScreenController <T extends Thread & IMessageSender> extends BaseScreenController implements MessageDispatcher<T> {
@@ -38,12 +34,19 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
     @FXML
     private TextArea showMessage;
 
-    private ObservableList<OnlineUser> users = FXCollections.observableArrayList(); //The elements of the ListView are contained within the items ObservableList. This ObservableList is automatically observed by the ListView, such that any changes that occur inside the ObservableList will be automatically shown in the ListView itself. If passying the ObservableList in to the ListView constructor is not feasible, the recommended approach for setting the items is to simply call:
-
+    /*NOTE: The elements of the ListView are contained within the items ObservableList. This ObservableList is
+    automatically observed by the ListView, such that any changes that occur inside the ObservableList will be
+    automatically shown in the ListView itself. If passying the ObservableList in to the ListView constructor is not
+    feasible, the recommended approach for setting the items is to simply call.*/
+    private ObservableList<OnlineUser> users = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listUsers.setItems(users); // The end result of this is, as noted above, that the ListView will automatically refresh the view to represent the items in the list.
+
+        /*NOTE: The end result of this is, as noted above, that the ListView will automatically refresh
+        the view to represent the items in the list*/
+        listUsers.setItems(users);
+
         listUsers.setCellFactory(new Callback<ListView<OnlineUser>, ListCell<OnlineUser>>() {
             @Override
             public ListCell<OnlineUser> call(ListView<OnlineUser> listView) {

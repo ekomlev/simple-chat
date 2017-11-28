@@ -1,9 +1,9 @@
 package com.simplechat.client.threading;
 
 import com.simplechat.client.utils.User;
-import com.simplechat.commons.messaging.IMessageSender;
+import com.simplechat.commons.interfaces.IMessageSender;
 import com.simplechat.commons.messaging.BaseMessage;
-import com.simplechat.commons.messaging.MessageDispatcher;
+import com.simplechat.commons.interfaces.MessageDispatcher;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,8 +20,8 @@ public class ClientThread extends Thread implements IMessageSender {
 
     public ClientThread(User user) throws IOException {
         socket = new Socket(user.getHostIp(), user.getPort());
-        os = new ObjectOutputStream(socket.getOutputStream()); // ?десериализует входящий поток
-        is = new ObjectInputStream(socket.getInputStream()); // ?десериализует исходящий поток
+        os = new ObjectOutputStream(socket.getOutputStream());
+        is = new ObjectInputStream(socket.getInputStream());
     }
 
     @Override
@@ -71,13 +71,15 @@ public class ClientThread extends Thread implements IMessageSender {
     @Override
     public void sendMessage(BaseMessage message) throws IOException {
         if (os != null)
-            os.writeObject(message);  //сериализуем отправляемое на сервер сообщение
+
+            //NOTE: serializing message that sends to Server
+            os.writeObject(message);
     }
 
     @Override
     public void setMessageEventListener(MessageDispatcher listener) {
         this.listener = listener;
-    } //в пере
+    }
 
     @Override
     public void finish() {
