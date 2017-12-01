@@ -17,14 +17,13 @@ public class MyListCell extends ListCell<OnlineUser> {
     private VBox vBox;
     private Label userName;
 
-
     public MyListCell() {
         try {
 
             //NOTE: loads ListCell.fxml and assign to hBox
             hBox = FXMLLoader.load(getClass().getResource("/views/ListCell.fxml"));
 
-            //NOTE: assign to vBox and userName variable corresponding values via get(level of child) method
+            //NOTE: assigns to vBox and userName variables corresponding values via get method (level of child)
             vBox = (VBox) hBox.getChildren().get(1);
             userName = (Label) vBox.getChildren().get(0);
         } catch (IOException e) {

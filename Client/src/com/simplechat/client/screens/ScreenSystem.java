@@ -1,5 +1,6 @@
 package com.simplechat.client.screens;
 
+import com.simplechat.client.utils.Options;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -57,6 +58,7 @@ public class ScreenSystem {
         }
         if (screen == ScreenTypes.CHAT_SCREEN) {
             window.setResizable(true);
+            window.setTitle(ScreenSystem.APP_TITLE + " " + Options.getInstance().getUser().getUserName());
         }
         /*NOTE: screens is HashMap. If HashMap contains LOGIN_SCREEN (CHAT_SCREEN) key
         (assign scene with access method of screens)*/

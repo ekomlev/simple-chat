@@ -36,7 +36,7 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
 
     /*NOTE: The elements of the ListView are contained within the items ObservableList. This ObservableList is
     automatically observed by the ListView, such that any changes that occur inside the ObservableList will be
-    automatically shown in the ListView itself. If passying the ObservableList in to the ListView constructor is not
+    automatically shown in the ListView itself. If passing the ObservableList in to the ListView constructor is not
     feasible, the recommended approach for setting the items is to simply call.*/
     private ObservableList<OnlineUser> users = FXCollections.observableArrayList();
 
@@ -84,13 +84,8 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
             e.printStackTrace();
         }
         inputMessage.clear();
+        enterBtn.setDisable(true);
     }
-
-    /*private void setListUsers(){
-        ObservableList<String> data = FXCollections.observableArrayList();
-        data.add(Options.getInstance().getUser().getUserName());
-        listUsers.setItems(data);
-    }*/
 
     public void keyReleasedPropertyChat() {
         String inputMessageField = inputMessage.getText();

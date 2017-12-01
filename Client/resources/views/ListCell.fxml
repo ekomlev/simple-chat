@@ -12,17 +12,20 @@
    <children>
       <VBox prefHeight="35.0" prefWidth="35.0">
          <children>
-            <ImageView fx:id="imgOnline" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgOnline" fitHeight="11.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../img/online.png" />
+                  <Image url="@../img/icon-online.png" />
                </image></ImageView>
          </children>
+         <padding>
+            <Insets left="5.0" top="13.0" />
+         </padding>
       </VBox>
-      <VBox id="#list-view" fx:id="userName" prefHeight="35.0" prefWidth="200.0" styleClass="..\styles\listStyles.css">
+      <VBox id="#list-view" fx:id="userName" prefHeight="35.0" prefWidth="200.0">
          <children>
             <Label fx:id="onlineUserName" text="Label" textFill="WHITE">
                <VBox.margin>
-                  <Insets left="10.0" top="7.0" />
+                  <Insets left="4.0" top="6.0" />
                </VBox.margin>
                <font>
                   <Font name="Calibri Bold" size="19.0" />

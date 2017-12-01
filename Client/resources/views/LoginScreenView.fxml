@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -10,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1024.0" style="-fx-background-color: #E6E6E6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simplechat.client.controllers.LoginScreenController">
+<AnchorPane cacheShape="false" centerShape="false" prefHeight="600.0" prefWidth="1024.0" scaleShape="false" style="-fx-background-color: #E6E6E6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simplechat.client.controllers.LoginScreenController">
    <children>
-      <HBox alignment="CENTER_LEFT" layoutY="160.0" maxHeight="120.0" maxWidth="1024.0" minHeight="155.0" minWidth="1024.0" prefHeight="155.0" prefWidth="1024.0">
+      <HBox alignment="CENTER_LEFT" focusTraversable="true" layoutY="160.0" maxHeight="120.0" maxWidth="1024.0" minHeight="155.0" minWidth="1024.0" prefHeight="155.0" prefWidth="1024.0">
          <children>
             <VBox alignment="CENTER_RIGHT" prefWidth="424.0">
                <children>
@@ -47,14 +48,14 @@
             </VBox>
             <VBox alignment="CENTER_LEFT" focusTraversable="true" prefHeight="100.0" prefWidth="600.0">
                <children>
-                  <TextField fx:id="loginField" maxWidth="300.0" minWidth="300.0" onKeyReleased="#keyReleasedPropertyLogin" pickOnBounds="false" prefWidth="300.0" promptText="Login">
+                  <TextField id="1" fx:id="loginField" maxWidth="300.0" minWidth="300.0" onKeyReleased="#keyReleasedPropertyLogin" pickOnBounds="false" prefWidth="300.0" promptText="Login">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
                         <Font name="Calibri" size="23.0" />
                      </font></TextField>
-                  <TextField fx:id="hostField" focusTraversable="false" layoutX="30.0" layoutY="70.0" maxWidth="300.0" minWidth="300.0" onKeyReleased="#keyReleasedPropertyLogin" prefWidth="300.0" promptText="127.0.0.1">
+                  <TextField id="2" fx:id="hostField" focusTraversable="false" layoutX="30.0" layoutY="70.0" maxWidth="300.0" minWidth="300.0" onKeyReleased="#keyReleasedPropertyLogin" prefWidth="300.0" promptText="127.0.0.1">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
@@ -62,7 +63,7 @@
                         <Font name="Calibri" size="23.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="portField" focusTraversable="false" layoutX="15.0" layoutY="88.0" maxWidth="300.0" minWidth="300.0" onKeyReleased="#keyReleasedPropertyLogin" prefWidth="300.0" promptText="4466">
+                  <TextField id="3" fx:id="portField" focusTraversable="false" layoutX="15.0" layoutY="88.0" maxWidth="300.0" minWidth="300.0" onKeyReleased="#keyReleasedPropertyLogin" prefWidth="300.0" promptText="4466">
                      <font>
                         <Font name="Calibri" size="23.0" />
                      </font>
@@ -73,8 +74,11 @@
                </padding>
             </VBox>
          </children>
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
       </HBox>
-      <Button fx:id="connectButton" disable="true" layoutX="460.0" layoutY="353.0" mnemonicParsing="false" style="-fx-background-color: #0087A7; -fx-cursor: hand;" text="Let's chat" textFill="WHITE">
+      <Button id="4" fx:id="connectButton" disable="true" layoutX="460.0" layoutY="353.0" mnemonicParsing="false" style="-fx-background-color: #0087A7; -fx-cursor: hand;" text="Let's chat" textFill="WHITE">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -90,4 +94,7 @@
          </font>
       </Text>
    </children>
+   <rotationAxis>
+      <Point3D />
+   </rotationAxis>
 </AnchorPane>
