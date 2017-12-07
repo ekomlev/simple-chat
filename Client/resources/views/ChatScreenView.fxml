@@ -68,7 +68,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="130.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <TextArea fx:id="inputMessage" cacheShape="false" centerShape="false" maxHeight="50.0" onKeyReleased="#keyReleasedPropertyChat" pickOnBounds="false" prefHeight="50.0" promptText="Type a message" scaleShape="false" style="-fx-border-width: 0; -fx-border-color: #ffffff; -fx-shape: none; -fx-display-caret: DEFAULT;" VBox.vgrow="ALWAYS">
+                              <TextArea fx:id="inputMessage" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="50.0" onKeyReleased="#keyReleasedPropertyChat" pickOnBounds="false" prefHeight="50.0" promptText="Type a message" scaleShape="false" style="-fx-border-width: 0; -fx-border-color: #ffffff; -fx-shape: none;" VBox.vgrow="ALWAYS">
                                  <opaqueInsets>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </opaqueInsets>

@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -55,6 +54,7 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
         listUsers.setItems(users);
 
         listUsers.setCellFactory(new Callback<ListView<OnlineUser>, ListCell<OnlineUser>>() {
+
             @Override
             public ListCell<OnlineUser> call(ListView<OnlineUser> listView) {
                 return new MyListCell();
@@ -63,14 +63,14 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
         Options.getInstance().getClientThread().setMessageEventListener(this);
         Options.getInstance().getClientThread().start();
         inputMessage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
             @Override
             public void handle(KeyEvent event) {
-
-                //TODO: It is need to fix problem with unfocus inputMessage while using hotkeys to send msg
                 if (event.isControlDown() && event.getCode() == KeyCode.ENTER) {
                     ChatScreenController.this.sendMessage();
                 }
             }
+
         });
 
         enterBtn.addEventHandler(MouseEvent.MOUSE_RELEASED, this::onSendMessageBtn);
@@ -100,11 +100,11 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
 
     public void keyReleasedPropertyChat() {
         String inputMessageField = inputMessage.getText();
-        if (!((inputMessageField.isEmpty()) || inputMessageField.trim().isEmpty()));
+        if (!((inputMessageField.isEmpty()) || inputMessageField.trim().isEmpty())) {
             enterBtn.setDisable(false);
             sendMessageHint.setVisible(true);
+        }
     }
-
 
     @Override
     public void onMessageReceived(BaseMessage message) throws IOException {
