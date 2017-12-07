@@ -27,7 +27,6 @@ public class Server extends Thread {
                     Socket socket = serverSocket.accept();
                     ClientThread clientThread = new ClientThread(socket);
                     messageDispatcher.registerClientThread(clientThread, true);
-                    //messageDispatcher.registerClientThread(new ClientThread(serverSocket.accept()), true);
                     System.out.println("New connection received");
                 }
                 Thread.sleep(10);

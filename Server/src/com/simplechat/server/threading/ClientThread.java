@@ -31,18 +31,22 @@ public class ClientThread extends Thread implements IMessageSender {
         this.clientId = String.valueOf(System.currentTimeMillis());
     }
 
+    @Override
     public String getClientName() {
         return clientName;
     }
 
+    @Override
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }
 
+    @Override
     public String getClientId() {
         return clientId;
     }
 
+    @Override
     public void setClientId(String clientId) {
         this.clientId = clientId;
     }
@@ -88,6 +92,8 @@ public class ClientThread extends Thread implements IMessageSender {
                     listener.onMessageReceived(message, this);
                 }
                 Thread.sleep(10);
+
+                //NOTE: Is there any way to avoid EOFException while ChatScreen is closing?
             } catch (SocketException | EOFException | InterruptedException e) {
                 e.printStackTrace();
                 if (listener != null)

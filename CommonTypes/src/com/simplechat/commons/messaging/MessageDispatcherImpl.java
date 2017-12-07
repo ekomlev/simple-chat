@@ -26,17 +26,13 @@ public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements
         clientsMap = new ConcurrentHashMap<>();
     }
 
-
     @Override
     public void onMessageReceived(BaseMessage message, T clientThread) throws IOException {
         switch (message.getMessageType()) {
             case INTRODUCE_MESSAGE:
                 IntroduceMessage im = (IntroduceMessage)message;
-                clientThread.setClientName(im.getSenderName());
-                introduceClient(clientThread);
-                for (T t : clientsMap.values()) {
-                    t.sendMessage(message);
-                }
+                clientThread.setClientName(im.getSenderName()); //!
+                introduceClient(clientThread, "joined us");
                 break;
             case CLIENT_MESSAGE:
                 message.setUserName(clientThread.getClientName());
@@ -64,7 +60,7 @@ public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements
             try {
 
                 //NOTE: sent new map to remaining users
-                introduceClient(messageSender);
+                introduceClient(messageSender, "left us");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,23 +73,14 @@ public class MessageDispatcherImpl<T extends Thread & IMessageSender> implements
     @Override
     public void registerClientThread(T clientThread, boolean isOnServer) {
         clientThread.setMessageEventListener(this);
-        //clients.add(clientThread);
         clientsMap.put(clientThread.getClientId(), clientThread);
         clientThread.start();
-        if (isOnServer) {
-            new Thread(() -> {
-                try {
-                    introduceClient(clientThread);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        }
     }
 
-    private void introduceClient(T client)  throws IOException{
+    private void introduceClient(T client, String messageBody)  throws IOException{
         List<OnlineUser> users = new LinkedList<>();
         OnlineUsersMessage msg = new OnlineUsersMessage();
+        msg.setMessageBody(client.getClientName() + " " + messageBody + "\n");
 
         //NOTE: going through clientsMap keys
         for (String s : clientsMap.keySet()) {

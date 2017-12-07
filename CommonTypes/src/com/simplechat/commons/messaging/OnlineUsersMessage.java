@@ -29,6 +29,6 @@ public class OnlineUsersMessage extends BaseMessage {
 
     @Override
     public String toString() {
-        return "OnlineUsersMessage{" + "users=" + users + '}';
+        return messageBody;
     }
 }

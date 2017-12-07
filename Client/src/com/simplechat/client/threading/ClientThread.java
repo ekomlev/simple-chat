@@ -35,6 +35,7 @@ public class ClientThread extends Thread implements IMessageSender {
                         listener.onMessageReceived(message);
                     }
                 } catch (SocketException e) {
+                    //NOTE: Is there any way to avoid SocketException while ChatScreen is closing?
                     e.printStackTrace();
                     isRunning = false;
                 } catch (IOException e) {
@@ -66,7 +67,10 @@ public class ClientThread extends Thread implements IMessageSender {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Client disconnected");
     }
+
 
     @Override
     public void sendMessage(BaseMessage message) throws IOException {

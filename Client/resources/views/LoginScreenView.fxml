@@ -13,7 +13,7 @@
 
 <AnchorPane cacheShape="false" centerShape="false" prefHeight="600.0" prefWidth="1024.0" scaleShape="false" style="-fx-background-color: #E6E6E6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.simplechat.client.controllers.LoginScreenController">
    <children>
-      <HBox alignment="CENTER_LEFT" focusTraversable="true" layoutY="160.0" maxHeight="120.0" maxWidth="1024.0" minHeight="155.0" minWidth="1024.0" prefHeight="155.0" prefWidth="1024.0">
+      <HBox alignment="CENTER_LEFT" focusTraversable="true" layoutY="160.0" maxHeight="120.0" minHeight="155.0" prefHeight="155.0">
          <children>
             <VBox alignment="CENTER_RIGHT" prefWidth="424.0">
                <children>

@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -33,6 +34,12 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
     private TextArea inputMessage;
     @FXML
     private TextArea showMessage;
+    @FXML
+    private Label deselectUserHint;
+    @FXML
+    private Label privateIndicator;
+    @FXML
+    private Label sendMessageHint;
 
     /*NOTE: The elements of the ListView are contained within the items ObservableList. This ObservableList is
     automatically observed by the ListView, such that any changes that occur inside the ObservableList will be
@@ -58,11 +65,14 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
         inputMessage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
+
+                //TODO: It is need to fix problem with unfocus inputMessage while using hotkeys to send msg
+                if (event.isControlDown() && event.getCode() == KeyCode.ENTER) {
                     ChatScreenController.this.sendMessage();
                 }
             }
         });
+
         enterBtn.addEventHandler(MouseEvent.MOUSE_RELEASED, this::onSendMessageBtn);
         try {
             Options.getInstance().getClientThread().sendMessage(new IntroduceMessage(Options.getInstance().getUser().getUserName()));
@@ -85,12 +95,14 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
         }
         inputMessage.clear();
         enterBtn.setDisable(true);
+        sendMessageHint.setVisible(false);
     }
 
     public void keyReleasedPropertyChat() {
         String inputMessageField = inputMessage.getText();
         if (!((inputMessageField.isEmpty()) || inputMessageField.trim().isEmpty()));
             enterBtn.setDisable(false);
+            sendMessageHint.setVisible(true);
     }
 
 
@@ -127,8 +139,12 @@ public class ChatScreenController <T extends Thread & IMessageSender> extends Ba
     public void listViewReleased(MouseEvent event) {
         if (listUsers.getSelectionModel().getSelectedItem() != null) {
             recipientId = listUsers.getSelectionModel().getSelectedItem().getUserId();
+            deselectUserHint.setVisible(true);
+            privateIndicator.setVisible(true);
         } else {
             recipientId = null;
+            deselectUserHint.setVisible(false);
+            privateIndicator.setVisible(false);
         }
     }
 }
